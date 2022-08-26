@@ -36,6 +36,7 @@ class FileServices:
             for item in self.__user_arr:
                 if item['id'] == id:
                     del self.__user_arr[i]
+                    self.write_file()
                     return item
                 else:
                     i += 1
