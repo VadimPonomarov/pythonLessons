@@ -9,13 +9,13 @@ from .models import CarModel
 
 class CarView(APIView):
     def get(self, *args, **kwargs):
-        pk = int(kwargs.get('pk'))
+        pk = kwargs.get('pk')
         qs = get_object_or_404(CarModel, pk=pk)
         serializer = CarSerializer(qs)
         return Response(serializer.data, status.HTTP_200_OK)
 
     def put(self, *args, **kwargs):
-        pk = int(kwargs.get('pk'))
+        pk = kwargs.get('pk')
         qs = get_object_or_404(CarModel, pk=pk)
         data = self.request.data
         serializer = CarSerializer(qs, data)
@@ -24,7 +24,7 @@ class CarView(APIView):
         return Response(serializer.data, status.HTTP_200_OK)
 
     def patch(self, *args, **kwargs):
-        pk = int(kwargs.get('pk'))
+        pk = kwargs.get('pk')
         qs = get_object_or_404(CarModel, pk=pk)
         data = self.request.data
         serializer = CarSerializer(qs, data, partial=True)
@@ -33,7 +33,7 @@ class CarView(APIView):
         return Response(serializer.data, status.HTTP_200_OK)
 
     def delete(self, *args, **kwargs):
-        pk = int(kwargs.get('pk'))
+        pk = kwargs.get('pk')
         qs = get_object_or_404(CarModel, pk=pk)
         qs.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
