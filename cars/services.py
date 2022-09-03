@@ -1,4 +1,5 @@
 from django.db.models import QuerySet
+
 from rest_framework.request import Request
 
 car_filters = {
@@ -22,7 +23,6 @@ car_filters = {
 
 def set_filter(qs: QuerySet, request: Request):
     params = request.query_params
-    print(params)
     for key, val in params.items():
         if key in car_filters:
             qs = qs.filter(**{car_filters.get(key): val})
