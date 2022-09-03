@@ -22,7 +22,8 @@ car_filters = {
 
 def set_filter(qs: QuerySet, request: Request):
     params = request.query_params
-    for key, val in car_filters.items():
-        if key in params:
-            qs = qs.filter(**{val: params.get(key)})
+    print(params)
+    for key, val in params.items():
+        if key in car_filters:
+            qs = qs.filter(**{car_filters.get(key): val})
     return qs
