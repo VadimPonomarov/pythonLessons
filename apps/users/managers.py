@@ -3,12 +3,12 @@ from django.contrib.auth.base_user import BaseUserManager
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password, **extra_kwargs):
-        extra_kwargs['is_active'] = True
 
         if not email:
             raise ValueError('The email must be set')
 
         email = self.normalize_email(email)
+        print(extra_kwargs)
         user = self.model(email=email, **extra_kwargs)
         user.set_password(password)
         user.save()

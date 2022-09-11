@@ -1,14 +1,14 @@
 from django.db import models
+from apps.auto_parks.models import AutoParkModel
 
 
 class CarModel(models.Model):
-    brand = models.CharField(max_length=25)
-    year = models.IntegerField()
-    seats = models.IntegerField()
-    cock_type = models.CharField(max_length=25)
-    engine_vol = models.FloatField()
-    id = models.IntegerField(primary_key=True)
-
     class Meta:
         db_table = 'cars'
 
+    brand = models.CharField(max_length=20, blank=True)
+    year = models.IntegerField(blank=True)
+    price = models.IntegerField()
+    auto_park = models.ForeignKey(AutoParkModel, on_delete=models.CASCADE, related_name='cars', blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)

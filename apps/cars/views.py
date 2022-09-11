@@ -1,20 +1,25 @@
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
-
-from apps.cars.serializers import CarSerializer, CarsSerializer
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, get_object_or_404
+from rest_framework.permissions import IsAdminUser
 
 from .models import CarModel
-from .services import set_filter
+from .serializers import CarAllSerializer, CarSerializer
 
 
-class CarView(RetrieveUpdateDestroyAPIView):
+class CarListView(ListCreateAPIView):
     queryset = CarModel.objects.all()
-    serializer_class = CarSerializer
-
-
-class CarsView(ListCreateAPIView):
-    queryset = CarModel.objects.all()
-    serializer_class = CarsSerializer
+    serializer_class = CarAllSerializer
+    permission_classes = (IsAdminUser,)
 
     def get_queryset(self):
-        queryset = super().get_queryset()
-        return set_filter(queryset, self.request)
+        auto_park_filter = self.request.query_params.get('auto_park_id')
+        if auto_park_filter:
+            queryset = super().get_queryset().filter(auto_park=auto_park_filter)
+        else:
+            queryset = super().get_queryset()
+        queryset = queryset.order_by('id')
+        return queryset
+
+
+class CarRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
+    queryset = CarModel.objects.all()
+    serializer_class = CarSerializer
