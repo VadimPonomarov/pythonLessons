@@ -6,7 +6,7 @@ from .serializers import CarAllSerializer, CarSerializer
 
 
 class CarListView(ListCreateAPIView):
-    queryset = CarModel.objects.all()
+    queryset = CarModel.object.all()
     serializer_class = CarAllSerializer
     permission_classes = (IsAdminUser,)
 
@@ -21,5 +21,5 @@ class CarListView(ListCreateAPIView):
 
 
 class CarRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
-    queryset = CarModel.objects.all()
+    queryset = CarModel.object.all()
     serializer_class = CarSerializer
